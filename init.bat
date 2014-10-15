@@ -1,0 +1,1 @@
+set gopath=%gopath%;c:\pastemgomodel;c:\beemgopastebin1
