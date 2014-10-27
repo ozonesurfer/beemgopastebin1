@@ -2,10 +2,10 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	//	"model"
 	"github.com/ozonesurfer/pastemgomodel/src/model"
 	"html/template"
 	"log"
+	//	"model"
 )
 
 type MainController struct {
@@ -27,7 +27,7 @@ func (this *CreateController) Post() {
 	paste := model.Paste{
 		Title:   this.GetString("title"),
 		Content: this.GetString("content"),
-		//		LanguageId: this.GetInt("language"),
+		// LanguageId: this.GetInt("language"),
 	}
 	paste.LanguageId, _ = this.GetInt("language")
 	_, _, now := paste.Add()
@@ -46,7 +46,12 @@ func (this *ShowController) Get() {
 	rawId := this.Ctx.Input.Param(":id")
 	id := model.ToObjectId(rawId)
 	paste := model.GetPaste(id)
+	content, err := paste.HighlightKeywords()
+	if err != nil {
+		log.Fatalln("Display error:", err)
+	}
 	this.Data["Paste"] = paste
+	this.Data["Content"] = template.HTML(content)
 	this.Data["Language"] = model.Languages[paste.LanguageId].Name
 	this.TplNames = "create.tpl"
 }
