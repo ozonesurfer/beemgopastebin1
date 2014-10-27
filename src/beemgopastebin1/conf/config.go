@@ -11,4 +11,4 @@ func main() {
 }
 */
 
-const DATABASE = "beegopastebin1_1"
+const DATABASE = "beegopastebin1_2"

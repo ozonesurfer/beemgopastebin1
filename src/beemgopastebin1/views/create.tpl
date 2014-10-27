@@ -5,7 +5,7 @@
 </head>
 <body>
 <p>{{.Paste.Title}}</p>
-<pre>{{.Paste.Content}}</pre>
+<pre>{{.Content}}</pre>
 <p>{{.Language}}
 <p>{{.Paste.CreatedOn}}</p>
 <a href="/">New Paste</a>

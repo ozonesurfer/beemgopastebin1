@@ -4,6 +4,8 @@ import (
 	"github.com/astaxie/beego"
 	//	"model"
 	"github.com/ozonesurfer/pastemgomodel/src/model"
+	"html/template"
+	"log"
 )
 
 type MainController struct {
@@ -30,7 +32,12 @@ func (this *CreateController) Post() {
 	paste.LanguageId, _ = this.GetInt("language")
 	_, _, now := paste.Add()
 	paste.CreatedOn = now
+	content, err := paste.HighlightKeywords()
+	if err != nil {
+		log.Fatalln("Display error:", err)
+	}
 	this.Data["Paste"] = paste
+	this.Data["Content"] = template.HTML(content)
 	this.Data["Language"] = model.Languages[paste.LanguageId].Name
 	this.TplNames = "create.tpl"
 }
